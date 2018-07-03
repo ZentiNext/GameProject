@@ -2,19 +2,21 @@
 <html >
 	<head>
 		<meta charset="UTF-8">
-		<title>Three.js template</title> 		
-		<link rel="stylesheet" href="css/style.css"> 
+		<title>Three.js template</title>
+		<link rel="stylesheet" href="css/app.css">
 	</head>
 
 	<body>
+		<h1>Game Prototype</h1>
+		<p> use W A D S to control handle</p>
 		<canvas id="canvas"></canvas>
-		
+
 		<script src='./js/libs/three.min.js'></script>
-		
+		<script src='./js/libs/THREEx.KeyboardState.js'></script>
 		<script src="js/sceneSubjects/GeneralLights.js"></script>
-		<script src="js/sceneSubjects/SceneSubject.js"></script>
-		
-		<script src="js/SceneManager.js"></script>    
+		<script src="js/sceneSubjects/Handle.js"></script>
+
+		<script src="js/SceneManager.js"></script>
 		<script src="js/main.js"></script>
 	</body>
 </html>
