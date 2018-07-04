@@ -11,13 +11,10 @@ function Ball(scene,eventBus) {
 	mesh.position.set(0, 3, -20);
 	scene.add(mesh);
 
-  eventBus.subscribe("handle",function(object){
-    if (isBallIntersectingObject(object)){
-      collide();
-    }
-  });
 
-  eventBus.subscribe("brick",function(object){
+
+  eventBus.subscribe("collisionDetect",function(object){
+
     if (isBallIntersectingObject(object)){
       collide();
     }

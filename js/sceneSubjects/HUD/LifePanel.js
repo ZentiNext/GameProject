@@ -7,7 +7,6 @@ function Life(scene,eventBus,life) {
 
 	scene.add(mesh);
   mesh.position.x=life*-1;
-  console.log(mesh);
 	this.update = function(time) {
 
 	}
@@ -21,10 +20,7 @@ function Life(scene,eventBus,life) {
 
 function LifePanel(scene,eventBus) {
 
-	const width = 6;
-	const height = 1;
-	const depth = 0.1;
-	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ), new THREE.MeshBasicMaterial( { color: 0x000000 } ));
+	const mesh = new THREE.Mesh();
 
 	mesh.position.set(13, -6.5, -20);
 	scene.add(mesh);

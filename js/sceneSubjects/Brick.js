@@ -11,6 +11,6 @@ function Brick(scene,eventBus) {
 
 
 	this.update = function(time) {
-		eventBus.post("brick",mesh);
+		eventBus.post("collisionDetect",mesh);
 	}
 }

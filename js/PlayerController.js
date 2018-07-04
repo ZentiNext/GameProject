@@ -4,7 +4,7 @@ function PlayerController(eventBus){
 
   const moveSpeed = 0.1;
 
-  var lives = 3;
+  var lives = 4;
 
   this.getLives = function(){
     return lives;
