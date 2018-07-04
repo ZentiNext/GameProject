@@ -8,18 +8,18 @@ function Ball(scene,eventBus) {
   var linearVelocity = new THREE.Vector3(0.1,-0.1,0);
   var angularVelocity = new THREE.Vector3(1,1,0);
 
-	mesh.position.set(0, 5, -20);
+	mesh.position.set(0, 3, -20);
 	scene.add(mesh);
 
-  eventBus.subscribe("handle",function(handle){
-    if(mesh.position.y<=handle.position.y+(handle.geometry.parameters.height)/2+radius+handle.geometry.parameters.depth){
-      linearVelocity.y=+0.1;
+  eventBus.subscribe("handle",function(object){
+    if (isBallIntersectingObject(object)){
+      collide();
     }
   })
 
   eventBus.subscribe("brick",function(object){
-    if(mesh.position.y>=object.position.y-(object.geometry.parameters.height)/2-radius-object.geometry.parameters.depth){
-      linearVelocity.y=-0.1;
+    if (isBallIntersectingObject(object)){
+      collide();
     }
   })
 
@@ -28,4 +28,21 @@ function Ball(scene,eventBus) {
 
 	}
 
+
+  function isBallIntersectingObject(object){
+    var object_YBoundry=(object.geometry.parameters.height)/2+object.geometry.parameters.depth;
+    var object_XBoundry=(object.geometry.parameters.width)/2+object.geometry.parameters.depth;
+    if( mesh.position.x-radius<=object.position.x+object_XBoundry && mesh.position.x+radius>=object.position.x-object_XBoundry){
+      if(mesh.position.y-radius<=object.position.y+object_YBoundry && mesh.position.y-radius>=object.position.y-object_YBoundry){
+        return true;
+      }else if(mesh.position.y+radius>=object.position.y-object_YBoundry && mesh.position.y+radius<=object.position.y+object_YBoundry){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function collide() {
+    linearVelocity.y*=-1;
+  }
 }
