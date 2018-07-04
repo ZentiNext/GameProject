@@ -1,5 +1,5 @@
 function PlayerController(){
-  
+
   const keyboard	= new THREEx.KeyboardState();
 
   const moveSpeed = 0.1;
@@ -9,10 +9,6 @@ function PlayerController(){
 			moveLeft(player);
 		}else if( keyboard.pressed('right') ){
 			moveRight(player);
-		}else if( keyboard.pressed('down') ){
-			moveDown(player);
-		}else if( keyboard.pressed('up') ){
-			moveUp(player);
 		}
 	}
 

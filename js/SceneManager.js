@@ -34,7 +34,7 @@ function SceneManager(canvas) {
 
     function buildCamera({ width, height }) {
         const aspectRatio = width / height;
-        const fieldOfView = 10;
+        const fieldOfView = 40;
         const nearPlane = 1;
         const farPlane = 100;
         const camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
@@ -45,7 +45,8 @@ function SceneManager(canvas) {
     function createSceneSubjects(scene) {
         const sceneSubjects = [
             new GeneralLights(scene),
-            new Handle(scene,eventBus)
+            new Handle(scene,eventBus),
+            new Ball(scene,eventBus)
         ];
         createPlayer();
         return sceneSubjects;
