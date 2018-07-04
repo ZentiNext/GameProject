@@ -5,8 +5,8 @@ function Ball(scene,eventBus) {
   const heightSegments = 8;
 	const mesh = new THREE.Mesh(new THREE.SphereGeometry( radius, widthSegments, heightSegments ), new THREE.MeshBasicMaterial( {color: 0xffff00} ));
 
-  var linearVelocity = new THREE.Vector3(0.1,-0.1,0);
-  var angularVelocity = new THREE.Vector3(1,1,0);
+  var linearVelocity = new THREE.Vector3(0,0,0);
+  var angularVelocity = new THREE.Vector3(0,0,0);
 
 	mesh.position.set(0, 3, -20);
 	scene.add(mesh);
@@ -15,16 +15,31 @@ function Ball(scene,eventBus) {
     if (isBallIntersectingObject(object)){
       collide();
     }
-  })
+  });
 
   eventBus.subscribe("brick",function(object){
     if (isBallIntersectingObject(object)){
       collide();
     }
-  })
+  });
+
+  eventBus.subscribe("startGame",function(object){
+    linearVelocity.y=-0.1;
+  });
+
+  eventBus.subscribe("isBallLost",function(handle){
+    if(handle.position.y>=mesh.position.y){
+      eventBus.post("ballLost");
+    }
+  });
+
+  eventBus.subscribe("ballReset",function(object){
+    mesh.position.y=3;
+    linearVelocity.y=0;
+  });
 
 	this.update = function(time) {
-      mesh.position.y += linearVelocity.y;
+    mesh.position.y += linearVelocity.y;
 
 	}
 

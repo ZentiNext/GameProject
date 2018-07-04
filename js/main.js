@@ -1,7 +1,8 @@
 const canvas = document.getElementById("canvas");
 
-const sceneManager = new SceneManager(canvas);
+const eventBus = new EventBus();
 
+const sceneManager = new SceneManager(canvas,eventBus);
 
 bindEventListeners();
 render();
@@ -25,3 +26,8 @@ function render() {
     requestAnimationFrame(render);
     sceneManager.update();
 }
+
+eventBus.subscribe("lost",function(){
+	$("#messageModalHeader").text("You Lost!!");
+	$("#messageModal").modal();
+});

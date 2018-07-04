@@ -13,5 +13,6 @@ function Handle(scene,eventBus) {
 	this.update = function(time) {
 		eventBus.post("keyboard",mesh);
 		eventBus.post("handle",mesh);
+		eventBus.post("isBallLost",mesh);
 	}
 }

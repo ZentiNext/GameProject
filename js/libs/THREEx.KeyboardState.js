@@ -39,7 +39,7 @@ THREEx.KeyboardState	= function()
 	// to store the current state
 	this.keyCodes	= {};
 	this.modifiers	= {};
-	
+
 	// create callback to bind/unbind keyboard events
 	var self	= this;
 	this._onKeyDown	= function(event){ self._onKeyChange(event, true); };
@@ -69,7 +69,8 @@ THREEx.KeyboardState.ALIAS	= {
 	'space'		: 32,
 	'pageup'	: 33,
 	'pagedown'	: 34,
-	'tab'		: 9
+	'tab'		: 9,
+	'enter' : 13
 };
 
 /**

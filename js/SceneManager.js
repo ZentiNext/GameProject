@@ -1,7 +1,7 @@
 function SceneManager(canvas) {
-    const eventBus = new EventBus();
+    
     const clock = new THREE.Clock();
-    const player1 = new PlayerController();
+    const player1 = new PlayerController(eventBus);
 
     const screenDimensions = {
         width: canvas.width,
