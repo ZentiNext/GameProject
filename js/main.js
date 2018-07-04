@@ -36,3 +36,7 @@ eventBus.subscribe("win",function(score){
 	$("#messageModalHeader").text("You Win !! with "+score+" score");
 	$("#messageModal").modal();
 });
+
+eventBus.subscribe("scoreChange",function(score){
+	$("#score").text("Score: "+score);
+});

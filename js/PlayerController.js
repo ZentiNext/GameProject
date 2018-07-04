@@ -6,7 +6,7 @@ function PlayerController(eventBus,clock){
 
   var lives = 4;
 
-  var bricks = 1;
+  var bricks = 2;
 
   var score = 1;
 
@@ -42,6 +42,7 @@ function PlayerController(eventBus,clock){
   eventBus.subscribe("brickDamaged",function(){
     bricks--;
     score+=Math.floor(timeBonus-clock.getElapsedTime())+lives;
+    eventBus.post("scoreChange",score);
     if (bricks==0) {
       eventBus.post("win",score);
       eventBus.post("ballReset");

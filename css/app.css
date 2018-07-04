@@ -1,3 +1,12 @@
 .container{
   height: 500px !important;
 }
+#game{
+  height: 500px !important;
+}
+#score{
+  margin-top: -40px;
+  margin-left: 200px;
+  color: #ffff00;
+  position: absolute;
+}
