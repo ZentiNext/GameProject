@@ -46,7 +46,8 @@ function SceneManager(canvas) {
         const sceneSubjects = [
             new GeneralLights(scene),
             new Handle(scene,eventBus),
-            new Ball(scene,eventBus)
+            new Ball(scene,eventBus),
+            new Brick(scene,eventBus)
         ];
         createPlayer();
         return sceneSubjects;

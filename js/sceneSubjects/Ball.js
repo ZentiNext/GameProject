@@ -17,6 +17,12 @@ function Ball(scene,eventBus) {
     }
   })
 
+  eventBus.subscribe("brick",function(object){
+    if(mesh.position.y>=object.position.y-(object.geometry.parameters.height)/2-radius-object.geometry.parameters.depth){
+      linearVelocity.y=-0.1;
+    }
+  })
+
 	this.update = function(time) {
       mesh.position.y += linearVelocity.y;
 
