@@ -4,7 +4,11 @@ function PlayerController(eventBus){
 
   const moveSpeed = 0.1;
 
-  var balls = 3;
+  var lives = 3;
+
+  this.getLives = function(){
+    return lives;
+  }
 
   this.keyPressed = function(player){
 		if( keyboard.pressed('left') ){
@@ -16,12 +20,13 @@ function PlayerController(eventBus){
 		}
 	}
 
+
   eventBus.subscribe("ballLost",function(){
-    balls--;
-    if (balls==0) {
+    lives--;
+    if (lives==0) {
       eventBus.post("lost");
     }
-
+    eventBus.post("removeLife",lives);
     eventBus.post("ballReset");
   });
 

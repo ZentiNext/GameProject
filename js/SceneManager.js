@@ -1,5 +1,5 @@
 function SceneManager(canvas) {
-    
+
     const clock = new THREE.Clock();
     const player1 = new PlayerController(eventBus);
 
@@ -47,7 +47,8 @@ function SceneManager(canvas) {
             new GeneralLights(scene),
             new Handle(scene,eventBus),
             new Ball(scene,eventBus),
-            new Brick(scene,eventBus)
+            new Brick(scene,eventBus),
+            new LifePanel(scene,eventBus)
         ];
         createPlayer();
         return sceneSubjects;
@@ -55,6 +56,8 @@ function SceneManager(canvas) {
 
     function createPlayer() {
       eventBus.subscribe("keyboard",player1.keyPressed);
+      eventBus.post("lives",player1.getLives());
+      console.log(player1.getLives());
     }
 
     this.update = function() {
