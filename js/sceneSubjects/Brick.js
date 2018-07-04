@@ -16,6 +16,10 @@ function Brick(scene,eventBus,brick) {
 		}
 	});
 
+	eventBus.subscribe("removeAllBricks",function(brick){
+		scene.remove(mesh);
+	});
+
 	this.update = function(time) {
 		eventBus.post("collisionDetect",[mesh,"brick",brick]);
 	}
@@ -39,6 +43,8 @@ function Bricks(scene,eventBus) {
 	eventBus.subscribe("removeBrick",function(brick){
 		delete bricks[brick];
 	});
+
+
 
 	this.update = function(time) {
 		for(let i=0; i<bricks.length; i++){

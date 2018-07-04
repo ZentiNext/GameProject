@@ -15,4 +15,5 @@ function Handle(scene,eventBus) {
 		eventBus.post("collisionDetect",[mesh,"handle"]);
 		eventBus.post("isBallLost",mesh);
 	}
+
 }
