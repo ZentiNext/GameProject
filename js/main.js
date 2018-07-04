@@ -31,3 +31,8 @@ eventBus.subscribe("lost",function(){
 	$("#messageModalHeader").text("You Lost!!");
 	$("#messageModal").modal();
 });
+
+eventBus.subscribe("win",function(score){
+	$("#messageModalHeader").text("You Win !! with "+score+" score");
+	$("#messageModal").modal();
+});

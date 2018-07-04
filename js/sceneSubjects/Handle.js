@@ -12,7 +12,7 @@ function Handle(scene,eventBus) {
 
 	this.update = function(time) {
 		eventBus.post("keyboard",mesh);
-		eventBus.post("collisionDetect",mesh);
+		eventBus.post("collisionDetect",[mesh,"handle"]);
 		eventBus.post("isBallLost",mesh);
 	}
 }

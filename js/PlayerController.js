@@ -1,4 +1,4 @@
-function PlayerController(eventBus){
+function PlayerController(eventBus,clock){
 
   const keyboard	= new THREEx.KeyboardState();
 
@@ -6,8 +6,17 @@ function PlayerController(eventBus){
 
   var lives = 4;
 
+  var bricks = 1;
+
+  var score = 1;
+
+  var timeBonus = 1000*bricks;
+
   this.getLives = function(){
     return lives;
+  }
+  this.getBricks = function(){
+    return bricks;
   }
 
   this.keyPressed = function(player){
@@ -29,6 +38,16 @@ function PlayerController(eventBus){
     eventBus.post("removeLife",lives);
     eventBus.post("ballReset");
   });
+
+  eventBus.subscribe("brickDamaged",function(){
+    bricks--;
+    score+=Math.floor(timeBonus-clock.getElapsedTime())+lives;
+    if (bricks==0) {
+      eventBus.post("win",score);
+      eventBus.post("ballReset");
+    }
+
+  })
 
   this.startGame = function(){
     if( keyboard.pressed('enter') ){

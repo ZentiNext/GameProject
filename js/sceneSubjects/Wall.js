@@ -2,7 +2,7 @@ function WallSide(scene,eventBus,side) {
   var width = 0;
   var height = 0;
   var x=0;
-  var y=0;
+  var y=1;
   if (side=="left") {
     width = 0.4;
     height = 12.4;
@@ -14,7 +14,7 @@ function WallSide(scene,eventBus,side) {
   } else if (side=="top") {
     width = 20;
     height = 0.4;
-    y=6;
+    y=7;
   }
 
 	const depth = 0.1;
@@ -25,7 +25,7 @@ function WallSide(scene,eventBus,side) {
 	scene.add(mesh);
 
 	this.update = function(time) {
-		eventBus.post("collisionDetect",mesh);
+		eventBus.post("collisionDetect",[mesh,"wall "+side]);
 	}
 }
 
@@ -33,7 +33,7 @@ function Wall(scene,eventBus) {
 
 	const mesh = new THREE.Mesh();
 
-	mesh.position.set(0, 1, -20);
+	mesh.position.set(0, 0, -20);
 
   const wallSubjects = [
     new WallSide(mesh,eventBus,"left"),
