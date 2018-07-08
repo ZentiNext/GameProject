@@ -3,14 +3,15 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
-  margin-left: 0;
-  margin-left: 0;
 }
 .container{
   height: 500px !important;
 }
 #game{
-  height: 500px !important;
+  height: 610px !important;
+  width: 1020px !important;
+  margin-left: 64px;
+  margin-top: 522px;
 }
 #score{
   margin-top: -40px;
