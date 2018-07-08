@@ -30,6 +30,10 @@ function PlayerController(eventBus,clock,player){
     return bricks;
   }
 
+  this.getScore = function(){
+    return score;
+  }
+
   this.keyPressed = function(player){
 		if( keyboard.pressed(leftKey) ){
 			moveLeft(player);

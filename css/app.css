@@ -1,9 +1,17 @@
-.container{
-  height: 500px !important;
+body,html{
+  height: 1700px;
+}
+body{
+  background-image: url("../images/background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 #game{
-  height: 500px !important;
-  width: 1000px;
+  height: 565px !important;
+  width: 960px !important;
+  margin-left: 196px;
+  margin-top: 475px;
 }
 #score{
   margin-top: -40px;

@@ -82,6 +82,7 @@ function Ball(scene,eventBus) {
 			linearVelocity.y*=-1;
 			linearVelocity.x*=1;
 			if (type=="brick") {
+				console.log("collide brick");
 				eventBus.post("damaged",[owner,brickNumber]);
 			}
 		}

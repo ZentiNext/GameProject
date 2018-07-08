@@ -1,5 +1,5 @@
 function Brick(scene,eventBus,brick) {
-
+	console.log(brick);
 	const width = 2;
 	const height = 0.4;
 	const depth = 0.1;

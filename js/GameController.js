@@ -32,36 +32,32 @@ function GameController(eventBus,clock) {
     eventBus.post("bricks",bricks);
     createPlayer1();
     createPlayer2();
+    console.log(player2.getScore());
   }
 
   function createPlayer2() {
     eventBus.subscribe("keyboard2",player2.keyPressed);
-    eventBus.post("lives",lives);
-    eventBus.post("bricks",bricks);
   }
 
   function createPlayer1() {
     eventBus.subscribe("keyboard1",player1.keyPressed);
-    eventBus.post("lives",player1.getLives());
-    eventBus.post("bricks",player1.getBricks());
   }
 
   eventBus.subscribe("brickDamaged",function(player) {
-    //console.log("damagedBricks "+damagedBricks);
-    //console.log("bricks "+bricks);
     damagedBricks++;
     if(player=="player1"){
       player1.brickDamaged();
     }else{
       player2.brickDamaged();
     }
+    console.log(player2.score);
     if (damagedBricks==bricks) {
-      if (player1.score>player2.score) {
-        eventBus.post("win",["player 1",player1.score]);
-      }else if(player1.score<player2.score) {
-        eventBus.post("win",["player 2",player2.score]);
+      if (player1.getScore()>player2.getScore()) {
+        eventBus.post("win",["player 1",player1.getScore()]);
+      }else if(player1.getScore()<player2.getScore()) {
+        eventBus.post("win",["player 2",player2.getScore()]);
       }else{
-        eventBus.post("win",["Both Scored Same",player1.score]);
+        eventBus.post("win",["Both Scored Same",player1.getScore()]);
       }
 
       eventBus.post("ballReset");
