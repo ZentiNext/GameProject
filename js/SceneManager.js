@@ -17,7 +17,6 @@ function SceneManager(canvas,eventBus) {
     function buildScene() {
         const scene = new THREE.Scene();
         scene.background = new THREE.Color("#000");
-
         return scene;
     }
 
