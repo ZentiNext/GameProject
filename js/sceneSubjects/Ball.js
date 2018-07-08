@@ -1,9 +1,10 @@
 function Ball(scene,eventBus) {
-
-	const radius = 0.2;
-  const widthSegments = 8;
-  const heightSegments = 8;
-	const mesh = new THREE.Mesh(new THREE.SphereGeometry( radius, widthSegments, heightSegments ), new THREE.MeshBasicMaterial( {color: 0xffff00} ));
+	var texture = new THREE.TextureLoader().load( './images/ball.png');
+	var material = new THREE.MeshBasicMaterial( { map: texture } );
+	const radius = .5;
+  const widthSegments = 20;
+  const heightSegments = 20;
+	const mesh = new THREE.Mesh(new THREE.SphereGeometry( radius, widthSegments, heightSegments ), new THREE.MeshBasicMaterial( { map: texture } ));
 
   var linearVelocity = new THREE.Vector3(0,0,0);
 	var linearInitVelocity = new THREE.Vector3(0,0,0);
