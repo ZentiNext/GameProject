@@ -10,6 +10,8 @@ function Life(scene,eventBus,life) {
 	this.update = function(time) {
 
 	}
+
+	/* Event Bus - Start */
   eventBus.subscribe("removeLife",function(lives) {
     if (lives==life) {
       scene.remove(mesh);
@@ -18,6 +20,7 @@ function Life(scene,eventBus,life) {
 	eventBus.subscribe("removeAllLives",function(lives) {
       scene.remove(mesh);
   });
+	/* Event Bus - End */
 }
 
 function LifePanel(scene,eventBus) {
@@ -27,13 +30,15 @@ function LifePanel(scene,eventBus) {
 	mesh.position.set(13, -6.5, -20);
 	scene.add(mesh);
 
-  eventBus.subscribe("lives",function(lives){
-    for (var i = 0; i < lives; i++) {
-      new Life(mesh,eventBus,i);
-    }
-  });
-
 	this.update = function(time) {
 
 	}
+
+	/* Event Bus - Start */
+	eventBus.subscribe("lives",function(lives){
+		for (var i = 0; i < lives; i++) {
+			new Life(mesh,eventBus,i);
+		}
+	});
+	/* Event Bus - End */
 }

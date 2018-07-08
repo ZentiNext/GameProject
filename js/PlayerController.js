@@ -1,4 +1,4 @@
-function PlayerController(eventBus,clock){
+function PlayerController(eventBus,clock,player){
 
   const keyboard	= new THREEx.KeyboardState();
 
@@ -6,17 +6,23 @@ function PlayerController(eventBus,clock){
 
   var lives = 3;
 
-  var bricks = 2;
+  var bricks = 0;
 
   var score = 1;
 
-  var timeBonus = 1000*bricks;
+  var timeBonus = 1000;
 
   var leftKey="left";
   var rightKey="right";
 
+  if(player=="player2"){
+    leftKey="a";
+    rightKey="d";
+  }
+
   var limit_Xmin=-10+1.1;
   var limit_Xmax=10-1.1;
+
   this.getLives = function(){
     return lives;
   }
@@ -29,50 +35,14 @@ function PlayerController(eventBus,clock){
 			moveLeft(player);
 		}else if( keyboard.pressed(rightKey) ){
 			moveRight(player);
-		}else if( keyboard.pressed('enter') ){
-			eventBus.post("startGame");
 		}
 	}
 
-  eventBus.subscribe("keyboardControls",function(args){
-    leftKey=args[0];
-    rightKey=args[1];
-  });
-
-  eventBus.subscribe("gameControls",function(args){
-    lives=args[0];
-    bricks=args[1];
-    moveSpeed=args[2];
-    eventBus.post("removeAllLives");
-    eventBus.post("lives",lives);
-    eventBus.post("removeAllBricks");
-    eventBus.post("bricks",bricks);
-  });
-
-  eventBus.subscribe("ballLost",function(){
-    lives--;
-    if (lives==0) {
-      eventBus.post("lost");
-    }
-    eventBus.post("removeLife",lives);
-    eventBus.post("ballReset");
-  });
-
-  eventBus.subscribe("brickDamaged",function(){
-    bricks--;
+  this.brickDamaged = function(){
+    bricks++;
     score+=Math.floor(timeBonus-clock.getElapsedTime())+lives;
     eventBus.post("scoreChange",score);
-    if (bricks==0) {
-      eventBus.post("win",score);
-      eventBus.post("ballReset");
-    }
-
-  })
-
-  this.startGame = function(){
-    if( keyboard.pressed('enter') ){
-			eventBus.post("startGame");
-		}
+    console.log(player);
   }
 
   function moveLeft(player) {
@@ -94,5 +64,26 @@ function PlayerController(eventBus,clock){
   function moveDown(player) {
     player.position.y -= moveSpeed;
   }
+
+	/* Event Bus - Start */
+  eventBus.subscribe("keyboardControls",function(args){
+    leftKey=args[0];
+    rightKey=args[1];
+  });
+
+  eventBus.subscribe("ballLost",function(){
+    lives--;
+    if (lives==0) {
+      eventBus.post("lost");
+    }
+    eventBus.post("removeLife",lives);
+    eventBus.post("ballReset");
+  });
+
+  eventBus.subscribe("playerReset",function(args){
+    score=0;
+  });
+  	/* Event Bus - End */
+
 
 }

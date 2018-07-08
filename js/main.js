@@ -27,20 +27,6 @@ function render() {
     sceneManager.update();
 }
 
-eventBus.subscribe("lost",function(){
-	$("#messageModalHeader").text("You Lost!!");
-	$("#messageModal").modal();
-});
-
-eventBus.subscribe("win",function(score){
-	$("#messageModalHeader").text("You Win !! with "+score+" score");
-	$("#messageModal").modal();
-});
-
-eventBus.subscribe("scoreChange",function(score){
-	$("#score").text("Score: "+score);
-});
-
 $("#btnKeyboardControlsSubmit").click(function(){
 	$("#status1").removeClass("alert-danger");
 	$("#status1").removeClass("alert-success");
@@ -56,6 +42,8 @@ $("#btnKeyboardControlsSubmit").click(function(){
 		$("#status1").addClass("alert-danger");
 	}
 });
+
+
 $("#btnGamePropertiesSubmit").click(function(){
 	$("#status2").removeClass("alert-danger");
 	$("#status2").removeClass("alert-success");
@@ -64,6 +52,7 @@ $("#btnGamePropertiesSubmit").click(function(){
 	var speedHandle=document.getElementById('speedHandle').value;
 	var validate=new RegExp("^[1-9][0-9]*$");
 	var validateDecimal=new RegExp("[1-9]([0-9]*\.[0-9]+)?$");
+
 	if(validate.test(lives) && lives<=10 && validate.test(bricks) && bricks<=10 && validateDecimal.test(speedHandle) && speedHandle<=2){
 		eventBus.post("gameControls",[lives,bricks,speedHandle]);
 		$("#status2").text("Successfully Changed");
@@ -73,3 +62,28 @@ $("#btnGamePropertiesSubmit").click(function(){
 		$("#status2").addClass("alert-danger");
 	}
 });
+
+$("#playAgain").click(function(){
+	eventBus.post("gameReset");
+	$("#messageModal").modal("hide");
+});
+
+/* Event Bus - Start */
+eventBus.subscribe("lost",function(){
+	$("#messageModalHeader").text("You Lost!!");
+	eventBus.post("stopBall");
+	$("#messageModal").modal();
+});
+
+eventBus.subscribe("win",function(args){
+	var player=args[0];
+	var score=args[1];
+	$("#messageModalHeader").text(player+" Win !! with "+score+" score");
+	eventBus.post("stopBall");
+	$("#messageModal").modal();
+});
+
+eventBus.subscribe("scoreChange",function(score){
+	$("#score").text("Score: "+score);
+});
+/* Event Bus - End */

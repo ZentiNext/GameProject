@@ -3,6 +3,7 @@ function WallSide(scene,eventBus,side) {
   var height = 0;
   var x=0;
   var y=1;
+
   if (side=="left") {
     width = 0.4;
     height = 12.4;
@@ -19,13 +20,12 @@ function WallSide(scene,eventBus,side) {
 
 	const depth = 0.1;
 	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ), new THREE.MeshBasicMaterial( { color: 0xff0000 } ));
-  console.log("wall");
-  console.log(mesh);
+
 	mesh.position.set(x, y, 0);
 	scene.add(mesh);
 
 	this.update = function(time) {
-		eventBus.post("collisionDetect",[mesh,"wall "+side]);
+		eventBus.post("collisionDetect",[mesh,"wall "+side,time]);
 	}
 }
 

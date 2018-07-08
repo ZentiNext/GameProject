@@ -6,43 +6,32 @@ function Ball(scene,eventBus) {
 	const mesh = new THREE.Mesh(new THREE.SphereGeometry( radius, widthSegments, heightSegments ), new THREE.MeshBasicMaterial( {color: 0xffff00} ));
 
   var linearVelocity = new THREE.Vector3(0,0,0);
+	var linearInitVelocity = new THREE.Vector3(0,0,0);
 	var angle=60;
+
+	var mass=0.01;
+	var initTime=0;
+	var prevTime=0;
+	var collideTime=0;
+	var linearAcceleration = new THREE.Vector3(0,0,0);
+
 	var force=0.1;
+
+	var owner="player1";
 
 	mesh.position.set(0, 0, -20);
 	scene.add(mesh);
 
-
-
-  eventBus.subscribe("collisionDetect",function(args){
-    if ( isBallIntersectingObject(args[0]) ){
-			console.log(args[1]);
-      collide(args);
-    }
-  });
-
-  eventBus.subscribe("startGame",function(object){
-		console.log(Math);
-    linearVelocity.y=force*THREE.Math.randInt(-1,1)*Math.sin(angle);
-		linearVelocity.x=force*THREE.Math.randInt(-1,1)*Math.cos(angle);
-  });
-
-  eventBus.subscribe("isBallLost",function(handle){
-    if(handle.position.y>=mesh.position.y){
-      eventBus.post("ballLost");
-    }
-  });
-
-  eventBus.subscribe("ballReset",function(object){
-    mesh.position.y=0;
-		mesh.position.x=0;
-    linearVelocity.y=0;
-		linearVelocity.x=0;
-  });
-
 	this.update = function(time) {
-    mesh.position.y += linearVelocity.y;
+
+		linearVelocity.y=linearInitVelocity.y+linearAcceleration.y*(time-prevTime);
+		linearVelocity.x=linearInitVelocity.x+linearAcceleration.x*(time-prevTime);
+
+		mesh.position.y += linearVelocity.y;
 		mesh.position.x += linearVelocity.x;
+
+		linearInitVelocity=linearVelocity;
+		prevTime=time;
 	}
 
 
@@ -80,8 +69,12 @@ function Ball(scene,eventBus) {
     return false;
   }
 
-  function collide(args) {
-		var type=args[1];
+  function collide(type,brickNumber) {
+		console.log("collide");
+		linearVelocity.y=linearInitVelocity.y+linearAcceleration.y*(collideTime-initTime);
+		linearVelocity.x=linearInitVelocity.x+linearAcceleration.x*(collideTime-initTime);
+		initTime=collideTime;
+
 		if (type=="wall left"||type=="wall right") {
 			linearVelocity.y*=1;
 			linearVelocity.x*=-1;
@@ -89,8 +82,47 @@ function Ball(scene,eventBus) {
 			linearVelocity.y*=-1;
 			linearVelocity.x*=1;
 			if (type=="brick") {
-				eventBus.post("damaged",args[2]);
+				eventBus.post("damaged",[owner,brickNumber]);
 			}
 		}
+
   }
+
+	/* Event Bus - Start */
+	eventBus.subscribe("collisionDetect",function(args){
+		var object=args[0];
+		var type=args[1];
+		var brickNumber=args[3];
+		if ( isBallIntersectingObject(object) ){
+			collideTime=args[2];
+			console.log(type);
+			collide(type,brickNumber);
+		}
+	});
+
+	eventBus.subscribe("startBall",function(object){
+		linearVelocity.y=force*THREE.Math.randInt(-1,1)*Math.sin(angle);
+		linearVelocity.x=force*THREE.Math.randInt(-1,1)*Math.cos(angle);
+		linearAcceleration = new THREE.Vector3(0.01,0.01,0);
+	});
+
+	eventBus.subscribe("stopBall",function(object){
+		linearVelocity.y=0;
+		linearVelocity.x=0;
+		linearAcceleration = new THREE.Vector3(0,0,0);
+	});
+
+	eventBus.subscribe("isBallLost",function(y){
+		if(y>=mesh.position.y){
+			eventBus.post("ballLost");
+		}
+	});
+
+	eventBus.subscribe("ballReset",function(object){
+		mesh.position.y=0;
+		mesh.position.x=0;
+		linearVelocity.y=0;
+		linearVelocity.x=0;
+	});
+	/* Event Bus - End */
 }

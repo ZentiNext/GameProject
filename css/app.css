@@ -3,6 +3,7 @@
 }
 #game{
   height: 500px !important;
+  width: 1000px;
 }
 #score{
   margin-top: -40px;

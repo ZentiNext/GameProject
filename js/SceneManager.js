@@ -1,7 +1,8 @@
-function SceneManager(canvas) {
+function SceneManager(canvas,eventBus) {
 
     const clock = new THREE.Clock();
-    const player1 = new PlayerController(eventBus,clock);
+
+    const gameController = new GameController(eventBus,clock);
 
     const screenDimensions = {
         width: canvas.width,
@@ -45,21 +46,18 @@ function SceneManager(canvas) {
     function createSceneSubjects(scene) {
         const sceneSubjects = [
             new GeneralLights(scene),
-            new Handle(scene,eventBus),
+            new Handle(scene,eventBus,"1"),
+            //new Handle(scene,eventBus,"2"),
             new Ball(scene,eventBus),
             new Bricks(scene,eventBus),
             new LifePanel(scene,eventBus),
             new Wall(scene,eventBus)
         ];
-        createPlayer();
+        gameController.createGame();
         return sceneSubjects;
     }
 
-    function createPlayer() {
-      eventBus.subscribe("keyboard",player1.keyPressed);
-      eventBus.post("lives",player1.getLives());
-      eventBus.post("bricks",player1.getBricks());
-    }
+
 
     this.update = function() {
         const elapsedTime = clock.getElapsedTime();
@@ -68,6 +66,8 @@ function SceneManager(canvas) {
         	sceneSubjects[i].update(elapsedTime);
 
         renderer.render(scene, camera);
+
+        gameController.startGame();
     }
 
     this.onWindowResize = function() {
@@ -81,4 +81,5 @@ function SceneManager(canvas) {
 
         renderer.setSize(width, height);
     }
+
 }
