@@ -4,7 +4,26 @@ function Handle(scene,eventBus,player) {
 	const height = 0.4;
 	const depth = 0.1;
 	const y=-5;
-	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ), new THREE.MeshBasicMaterial( { color: 0x00ff00 } ));
+
+	var texture = new THREE.TextureLoader().load( './images/playerWedge.png');
+	 // uniforms
+	 var uniforms = {
+			 color: { type: "c", value: new THREE.Color( 0xff0000 ) }, // material is "red"
+			 texture: { type: "t", value: texture },
+	 };
+
+	 if (player=="2") {
+		 uniforms = {
+  			 color: { type: "c", value: new THREE.Color( 0x0000ff ) }, // material is "blue"
+  			 texture: { type: "t", value: texture },
+  	 };
+ 	}
+	var material =new THREE.ShaderMaterial( {
+		uniforms: uniforms,
+		vertexShader    : document.getElementById( 'vertex_shader' ).textContent,
+		fragmentShader  : document.getElementById( 'fragment_shader' ).textContent
+	} );
+	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ), material);
 
 	mesh.position.set(0, y+player/2, -20);
 	scene.add(mesh);

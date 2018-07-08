@@ -1,6 +1,6 @@
 function GameController(eventBus,clock) {
-  var player1 = new PlayerController(eventBus,clock,"player1");
-  var player2 = new PlayerController(eventBus,clock,"player2");
+  var player1 = new PlayerController(eventBus,clock,"1");
+  var player2 = new PlayerController(eventBus,clock,"2");
 
   const keyboard	= new THREEx.KeyboardState();
 
@@ -27,12 +27,10 @@ function GameController(eventBus,clock) {
   }
 
   this.createGame = function() {
-    eventBus.subscribe("keyboard1",player1.keyPressed);
     eventBus.post("lives",lives);
     eventBus.post("bricks",bricks);
     createPlayer1();
     createPlayer2();
-    console.log(player2.getScore());
   }
 
   function createPlayer2() {
@@ -43,25 +41,37 @@ function GameController(eventBus,clock) {
     eventBus.subscribe("keyboard1",player1.keyPressed);
   }
 
-  eventBus.subscribe("brickDamaged",function(player) {
+  eventBus.subscribe("brickDamaged",function(args) {
+    var owner=args[0];
+    var bounces = args[1];
     damagedBricks++;
-    if(player=="player1"){
-      player1.brickDamaged();
+    if(owner=="1"){
+      player1.brickDamaged(bounces);
     }else{
-      player2.brickDamaged();
+      player2.brickDamaged(bounces);
     }
-    console.log(player2.score);
     if (damagedBricks==bricks) {
+      console.log(player2.getScore());
       if (player1.getScore()>player2.getScore()) {
-        eventBus.post("win",["player 1",player1.getScore()]);
+        eventBus.post("win",["1",player1.getScore()]);
       }else if(player1.getScore()<player2.getScore()) {
-        eventBus.post("win",["player 2",player2.getScore()]);
-      }else{
+        eventBus.post("win",["2",player2.getScore()]);
+      }else if(player1.getScore()==player2.getScore()){
         eventBus.post("win",["Both Scored Same",player1.getScore()]);
       }
 
       eventBus.post("ballReset");
     }
+  });
+
+  eventBus.subscribe("ballLost",function(player){
+    if (player=="1") {
+      player1.lifeLost(lives);
+    } else {
+      player2.lifeLost(lives);
+    }
+
+    eventBus.post("ballReset");
   });
 
   eventBus.subscribe("gameReset",function() {

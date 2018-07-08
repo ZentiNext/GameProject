@@ -4,18 +4,17 @@ function PlayerController(eventBus,clock,player){
 
   var moveSpeed = 0.1;
 
-  var lives = 3;
+  var livesLost = 0;
 
   var bricks = 0;
 
-  var score = 1;
+  var score = 0;
 
-  var timeBonus = 1000;
 
   var leftKey="left";
   var rightKey="right";
 
-  if(player=="player2"){
+  if(player=="2"){
     leftKey="a";
     rightKey="d";
   }
@@ -24,8 +23,17 @@ function PlayerController(eventBus,clock,player){
   var limit_Xmax=10-1.1;
 
   this.getLives = function(){
-    return lives;
+    return livesLost;
   }
+
+  this.lifeLost = function(lives){
+    livesLost++;
+    if (lives==livesLost) {
+      eventBus.post("lost",player);
+    }
+    eventBus.post("removeLife",[livesLost,player]);
+  }
+
   this.getBricks = function(){
     return bricks;
   }
@@ -42,11 +50,13 @@ function PlayerController(eventBus,clock,player){
 		}
 	}
 
-  this.brickDamaged = function(){
+  this.brickDamaged = function(bounces){
     bricks++;
-    score+=Math.floor(timeBonus-clock.getElapsedTime())+lives;
-    eventBus.post("scoreChange",score);
-    console.log(player);
+    console.log("player "+player+" "+score);
+    console.log();
+    score+=40-bounces-livesLost;
+
+    eventBus.post("scoreChange",[score,player]);
   }
 
   function moveLeft(player) {
@@ -75,17 +85,11 @@ function PlayerController(eventBus,clock,player){
     rightKey=args[1];
   });
 
-  eventBus.subscribe("ballLost",function(){
-    lives--;
-    if (lives==0) {
-      eventBus.post("lost");
-    }
-    eventBus.post("removeLife",lives);
-    eventBus.post("ballReset");
-  });
 
   eventBus.subscribe("playerReset",function(args){
     score=0;
+    bricks=0;
+    lives=3;
   });
   	/* Event Bus - End */
 

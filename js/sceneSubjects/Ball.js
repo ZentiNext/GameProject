@@ -1,10 +1,31 @@
 function Ball(scene,eventBus) {
-	var texture = new THREE.TextureLoader().load( './images/ball.png');
-	var material = new THREE.MeshBasicMaterial( { map: texture } );
+
 	const radius = .5;
   const widthSegments = 20;
   const heightSegments = 20;
-	const mesh = new THREE.Mesh(new THREE.SphereGeometry( radius, widthSegments, heightSegments ), new THREE.MeshBasicMaterial( { map: texture } ));
+
+	var colour1=new THREE.Color( 0xff0000 );
+	var colour2=new THREE.Color( 0x0000ff );
+
+	var texture = new THREE.TextureLoader().load( './images/ball.png');
+
+
+	 // uniforms
+	 var uniforms = {
+			 color: { type: "c", value: colour1 }, // material is "red"
+			 texture: { type: "t", value: texture },
+	 };
+
+	var material =new THREE.ShaderMaterial( {
+		uniforms: uniforms,
+		vertexShader    : document.getElementById( 'vertex_shader' ).textContent,
+		fragmentShader  : document.getElementById( 'fragment_shader' ).textContent
+	} );
+
+	texture.repeat.set(0.5, 0.5);
+	texture.needsUpdate = true;
+	material.transparent=true;
+	const mesh = new THREE.Mesh(new THREE.SphereGeometry( radius, widthSegments, heightSegments ), material);
 
   var linearVelocity = new THREE.Vector3(0,0,0);
 	var linearInitVelocity = new THREE.Vector3(0,0,0);
@@ -18,7 +39,8 @@ function Ball(scene,eventBus) {
 
 	var force=0.1;
 
-	var owner="player1";
+	var owner="1";
+	var bounces=0;
 
 	mesh.position.set(0, 0, -20);
 	scene.add(mesh);
@@ -50,20 +72,14 @@ function Ball(scene,eventBus) {
 
     if( ball_Xmin<=object_Xmax && ball_Xmin>=object_Xmin){
       if(ball_Ymin<=object_Ymax && ball_Ymin>=object_Ymin){
-				console.log("1 1");
         return true;
       }else if(ball_Ymax>=object_Ymin && ball_Ymax<=object_Ymax){
-				console.log("1 2");
-				console.log(ball_Ymax);
-				console.log(object_Ymin);
         return true;
       }
     }else if(ball_Xmax>=object_Xmin && ball_Xmin<=object_Xmax){
 			if(ball_Ymin<=object_Ymax && ball_Ymin>=object_Ymin){
-				console.log("2 1");
         return true;
       }else if(ball_Ymax>=object_Ymin && ball_Ymax<=object_Ymax){
-				console.log("2 2");
         return true;
       }
 		}
@@ -71,7 +87,6 @@ function Ball(scene,eventBus) {
   }
 
   function collide(type,brickNumber) {
-		console.log("collide");
 		linearVelocity.y=linearInitVelocity.y+linearAcceleration.y*(collideTime-initTime);
 		linearVelocity.x=linearInitVelocity.x+linearAcceleration.x*(collideTime-initTime);
 		initTime=collideTime;
@@ -83,11 +98,27 @@ function Ball(scene,eventBus) {
 			linearVelocity.y*=-1;
 			linearVelocity.x*=1;
 			if (type=="brick") {
-				console.log("collide brick");
-				eventBus.post("damaged",[owner,brickNumber]);
+				bounces=-1;
+				eventBus.post("damaged",[owner,brickNumber,bounces]);
 			}
 		}
 
+		if (type=="handle1") {
+			if (owner=="1") {
+				console.log(type+" "+owner);
+				owner=2;
+				bounces=-1;
+				mesh.material.uniforms.color.value=colour2;
+			}
+		}else if(type=="handle2"){
+			if (owner=="2") {
+				console.log(type+" "+owner);
+				owner=1;
+				bounces=-1;
+				mesh.material.uniforms.color.value=colour1;
+			}
+		}
+		bounces++;
   }
 
 	/* Event Bus - Start */
@@ -97,7 +128,6 @@ function Ball(scene,eventBus) {
 		var brickNumber=args[3];
 		if ( isBallIntersectingObject(object) ){
 			collideTime=args[2];
-			console.log(type);
 			collide(type,brickNumber);
 		}
 	});
@@ -116,7 +146,7 @@ function Ball(scene,eventBus) {
 
 	eventBus.subscribe("isBallLost",function(y){
 		if(y>=mesh.position.y){
-			eventBus.post("ballLost");
+			eventBus.post("ballLost",owner);
 		}
 	});
 

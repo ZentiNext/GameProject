@@ -69,8 +69,8 @@ $("#playAgain").click(function(){
 });
 
 /* Event Bus - Start */
-eventBus.subscribe("lost",function(){
-	$("#messageModalHeader").text("You Lost!!");
+eventBus.subscribe("lost",function(player){
+	$("#messageModalHeader").text("Player "+player+" Lost!!");
 	eventBus.post("stopBall");
 	$("#messageModal").modal();
 });
@@ -83,7 +83,15 @@ eventBus.subscribe("win",function(args){
 	$("#messageModal").modal();
 });
 
-eventBus.subscribe("scoreChange",function(score){
-	$("#score").text("Score: "+score);
+eventBus.subscribe("scoreChange",function(args){
+	var score=args[0];
+	var player = args[1];
+	if (player=="1") {
+			$("#score1").text("Score: "+score);
+	}else{
+		$("#score2").text("Score: "+score);
+	}
+
+
 });
 /* Event Bus - End */

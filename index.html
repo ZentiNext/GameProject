@@ -9,6 +9,24 @@
 		<script src='./js/libs/jquery-3.3.1.min.js'></script>
 		<script src='./js/libs/bootstrap.min.js'></script>
 
+		<script id="vertex_shader" type="x-shader/x-vertex">
+		varying vec2 vUv;
+		void main() {
+				vUv = uv;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+		}
+		</script>
+
+		<script id="fragment_shader" type="x-shader/x-fragment">
+		uniform vec3 color;
+		uniform sampler2D texture;
+		varying vec2 vUv;
+		void main() {
+				vec4 tColor = texture2D( texture, vUv );
+				gl_FragColor = vec4( mix( color, tColor.rgb, tColor.a ), 1.0 );
+		}
+		</script>
+
 	</head>
 
 	<body>
@@ -16,7 +34,8 @@
 			<div id="game">
 				<div id="menubar"> <button id="btnMenu" type="button" name="button">Main Menu</button>	</div>
 				<canvas id="canvas"></canvas>
-				<div id="score">Score: 0</div>
+				<div id="score1">Score: 0</div>
+				<div id="score2">Score: 0</div>
 			</div>
 
 
@@ -161,6 +180,7 @@
 		<script src="js/SceneManager.js"></script>
 		<script src="js/main.js"></script>
 
+
 	</body>
-	
+
 </html>

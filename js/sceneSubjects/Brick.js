@@ -1,9 +1,11 @@
 function Brick(scene,eventBus,brick) {
-	console.log(brick);
 	const width = 2;
 	const height = 0.4;
 	const depth = 0.1;
-	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ), new THREE.MeshBasicMaterial( { color: 0x0000ff } ));
+
+	var texture = new THREE.TextureLoader().load( './images/cactusSlab.png');
+	var material = new THREE.MeshBasicMaterial( { map: texture } );
+	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ),material);
 
 	mesh.position.set(-6+(brick*3)%13,1+(brick*3)%5,0);
 	scene.add(mesh);
@@ -15,18 +17,14 @@ function Brick(scene,eventBus,brick) {
 	/* Event Bus - Start */
 	eventBus.subscribe("damaged",function(args){
 
-		player=args[0];
-		damagedBrick=args[1];
-
-		console.log("player "+player);
-		console.log("brick "+brick);
-		console.log("damagedBrick "+damagedBrick);
+		var owner=args[0];
+		var damagedBrick=args[1];
+		var bounces=args[2];
 
 		if(brick==damagedBrick){
-			console.log("damaged");
 			scene.remove(mesh);
 			eventBus.post("removeBrick",brick);
-			eventBus.post("brickDamaged",player);
+			eventBus.post("brickDamaged",[owner,bounces]);
 		}
 	});
 

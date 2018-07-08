@@ -48,10 +48,11 @@ function SceneManager(canvas,eventBus) {
         const sceneSubjects = [
             new GeneralLights(scene),
             new Handle(scene,eventBus,"1"),
-            //new Handle(scene,eventBus,"2"),
+            new Handle(scene,eventBus,"2"),
             new Ball(scene,eventBus),
             new Bricks(scene,eventBus),
-            new LifePanel(scene,eventBus),
+            new LifePanel(scene,eventBus,"1"),
+            new LifePanel(scene,eventBus,"2"),
             new Wall(scene,eventBus)
         ];
         gameController.createGame();

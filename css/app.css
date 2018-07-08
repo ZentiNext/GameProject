@@ -13,7 +13,13 @@ body{
   margin-left: 90px;
   margin-top: 475px;
 }
-#score{
+#score1{
+  margin-top: -40px;
+  margin-left: 700px;
+  color: #ffff00;
+  position: absolute;
+}
+#score2{
   margin-top: -40px;
   margin-left: 200px;
   color: #ffff00;
