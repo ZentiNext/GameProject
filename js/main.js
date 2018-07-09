@@ -4,6 +4,8 @@ const eventBus = new EventBus();
 
 const sceneManager = new SceneManager(canvas,eventBus);
 
+const audioController = new AudioController();
+
 var playerMode="1 Player";
 
 bindEventListeners();
@@ -77,6 +79,14 @@ $("#btnGamePropertiesSubmit").click(function(){
 		$("#status2").text("Wrong input");
 		$("#status2").addClass("alert-danger");
 	}
+});
+
+$("#btnMenu").click(function(){
+	audioController.playMenuAudio();
+});
+
+$("#btnMenuClose").click(function(){
+	audioController.pauseMenuAudio();
 });
 
 $("#playAgain").click(function(){

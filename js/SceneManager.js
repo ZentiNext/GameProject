@@ -94,5 +94,7 @@ function SceneManager(canvas,eventBus) {
 
         renderer.setSize(width, height);
     }
-
+    this.getCamera = function(){
+      return camera;
+    }
 }
