@@ -103,8 +103,8 @@ $("#btnMenu").click(function(){
 	audioController.playMenuAudio();
 });
 
-$("#btnMenuClose").click(function(){
-	audioController.pauseMenuAudio();
+$(".close").click(function(){
+	audioController.stopAudio();
 });
 
 $("#playAgain").click(function(){
@@ -116,6 +116,7 @@ $("#playAgain").click(function(){
 eventBus.subscribe("lost",function(player){
 	$("#messageModalHeader").text("Player "+player+" Lost!!");
 	eventBus.post("stopBall");
+	audioController.playMenuAudio();
 	$("#messageModal").modal();
 });
 
@@ -124,6 +125,7 @@ eventBus.subscribe("win",function(args){
 	var score=args[1];
 	$("#messageModalHeader").text(player+" Win !! with "+score+" score");
 	eventBus.post("stopBall");
+	audioController.playMenuAudio();
 	$("#messageModal").modal();
 });
 

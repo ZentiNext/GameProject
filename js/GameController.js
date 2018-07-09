@@ -31,6 +31,8 @@ console.log("controllers "+bricks);
     eventBus.post("lives",lives);
     eventBus.post("bricks",bricks);
     eventBus.post("playerReset");
+    $("#score1").text("Score: 0");
+    $("#score2").text("Score: 0");
   }
 
   function createPlayer2() {
@@ -87,5 +89,7 @@ console.log("controllers "+bricks);
     eventBus.post("lives",lives);
     eventBus.post("bricks",bricks);
     eventBus.post("playerReset");
+    $("#score1").text("Score: 0");
+    $("#score2").text("Score: 0");
   });
 }

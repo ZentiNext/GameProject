@@ -87,6 +87,7 @@ function Ball(scene,eventBus) {
   }
 
   function collide(type,brickNumber) {
+		audioController.playBounceAudio();
 		linearVelocity.y=linearInitVelocity.y+linearAcceleration.y*(collideTime-initTime);
 		linearVelocity.x=linearInitVelocity.x+linearAcceleration.x*(collideTime-initTime);
 		initTime=collideTime;
@@ -148,6 +149,7 @@ function Ball(scene,eventBus) {
 
 	eventBus.subscribe("isBallLost",function(y){
 		if(y>=mesh.position.y){
+			audioController.playBallLostAudio();
 			eventBus.post("ballLost",owner);
 		}
 	});

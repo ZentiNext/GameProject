@@ -10,6 +10,10 @@ function AudioController(){
   var audioLoader = new THREE.AudioLoader();
 
 
+  this.stopAudio = function(){
+    sound.stop();
+  }
+
   this.playMenuAudio = function(){
     audioLoader.load( './sounds/Game-Menu_Looping.mp3', function( buffer ) {
       sound.setBuffer( buffer );
@@ -18,8 +22,27 @@ function AudioController(){
       sound.play();
     });
   }
-  this.pauseMenuAudio = function(){
-    sound.stop();
+
+  this.playBounceAudio = function(){
+    var bounceSound = new THREE.Audio( listener );
+    var bounceAudioLoader = new THREE.AudioLoader();
+    bounceAudioLoader.load( './sounds/Bounce-Sound.mp3', function( buffer ) {
+      bounceSound.setBuffer( buffer );
+      bounceSound.setLoop(false);
+      bounceSound.setVolume(0.9);
+      bounceSound.play();
+    });
+  }
+
+  this.playBallLostAudio = function(){
+    var bounceSound = new THREE.Audio( listener );
+    var bounceAudioLoader = new THREE.AudioLoader();
+    bounceAudioLoader.load( './sounds/Balloon-Popping.mp3', function( buffer ) {
+      bounceSound.setBuffer( buffer );
+      bounceSound.setLoop(false);
+      bounceSound.setVolume(0.9);
+      bounceSound.play();
+    });
   }
 
 }
