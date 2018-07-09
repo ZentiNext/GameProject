@@ -81,9 +81,11 @@ console.log("controllers "+bricks);
     lives=args[0];
     bricks=args[1];
     moveSpeed=args[2];
+    damagedBricks=0;
     eventBus.post("removeAllLives");
-    eventBus.post("lives",lives);
     eventBus.post("removeAllBricks");
+    eventBus.post("lives",lives);
     eventBus.post("bricks",bricks);
+    eventBus.post("playerReset");
   });
 }

@@ -7,6 +7,10 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
 }
+#btnMode,#btnMenu{
+  background-color: #f37a1a;
+  color: #ffffff;
+}
 #game{
   height: 565px !important;
   width: 960px !important;
@@ -16,17 +20,17 @@ body{
 #score1{
   margin-top: -40px;
   margin-left: 700px;
-  color: #ffff00;
+  color: #000000;
   position: absolute;
 }
 #score2{
   margin-top: -40px;
   margin-left: 200px;
-  color: #ffff00;
+  color: #000000;
   position: absolute;
 }
 #menubar{
-  background-color: #000000;
+  background-color: #2d2d2d;
 }
 
 #error{
@@ -35,14 +39,14 @@ body{
 #success{
   color: #00ff00;
 }
-#modalMenu{
-  background-color: #000000;
+.modal-content{
+  background-color: #ffe497;
 }
 /* Style the tab */
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    background-color: #f37a1a;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -70,6 +74,6 @@ body{
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #fb9a37;
     border-top: none;
 }
