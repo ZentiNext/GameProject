@@ -98,7 +98,7 @@ function Ball(scene,eventBus) {
 			linearVelocity.y*=-1;
 			linearVelocity.x*=1;
 			if (type=="brick") {
-				bounces=-1;
+				console.log("Ball brick "+owner+" "+brickNumber+" "+bounces);
 				eventBus.post("damaged",[owner,brickNumber,bounces]);
 			}
 		}
@@ -106,9 +106,11 @@ function Ball(scene,eventBus) {
 		if (type=="handle1") {
 			if (owner=="1") {
 				console.log(type+" "+owner);
-				owner=2;
+				if (playerMode!="1 Player") {
+					owner=2;
+					mesh.material.uniforms.color.value=colour2;
+				}
 				bounces=-1;
-				mesh.material.uniforms.color.value=colour2;
 			}
 		}else if(type=="handle2"){
 			if (owner=="2") {

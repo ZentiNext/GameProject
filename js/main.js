@@ -4,6 +4,8 @@ const eventBus = new EventBus();
 
 const sceneManager = new SceneManager(canvas,eventBus);
 
+var playerMode="1 Player";
+
 bindEventListeners();
 render();
 
@@ -26,7 +28,21 @@ function render() {
     requestAnimationFrame(render);
     sceneManager.update();
 }
+$("#btnMode").click(function(){
+	console.log("change mode");
+	if (playerMode=="1 Player") {
+		playerMode="2 Player";
+		$("#btnMode").text("Two Player");
+		$("#score2").html("Score: 0");
+		sceneManager.createTwoPlayerSceneSubjects();
+	} else {
+		playerMode="1 Player";
+		$("#btnMode").text("One Player");
+		$("#score2").html("");
+		sceneManager.removeTwoPlayerSceneSubjects();
+	}
 
+});
 $("#btnKeyboardControlsSubmit").click(function(){
 	$("#status1").removeClass("alert-danger");
 	$("#status1").removeClass("alert-success");
@@ -91,7 +107,5 @@ eventBus.subscribe("scoreChange",function(args){
 	}else{
 		$("#score2").text("Score: "+score);
 	}
-
-
 });
 /* Event Bus - End */

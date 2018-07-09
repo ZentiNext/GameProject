@@ -48,27 +48,38 @@ function SceneManager(canvas,eventBus) {
         const sceneSubjects = [
             new GeneralLights(scene),
             new Handle(scene,eventBus,"1"),
-            new Handle(scene,eventBus,"2"),
+            //new Handle(scene,eventBus,"2"),
             new Ball(scene,eventBus),
             new Bricks(scene,eventBus),
             new LifePanel(scene,eventBus,"1"),
-            new LifePanel(scene,eventBus,"2"),
+            //new LifePanel(scene,eventBus,"2"),
             new Wall(scene,eventBus)
         ];
         gameController.createGame();
         return sceneSubjects;
     }
 
+    this.createTwoPlayerSceneSubjects = function() {
+        sceneSubjects.push(new Handle(scene,eventBus,"2"));
+        sceneSubjects.push(new LifePanel(scene,eventBus,"2"));
+        gameController.createGame();
+    }
+
+    this.removeTwoPlayerSceneSubjects = function() {
+        eventBus.post("removeHandle",2);
+        eventBus.post("removeLifePanel",2);
+    }
 
 
     this.update = function() {
         const elapsedTime = clock.getElapsedTime();
 
-        for(let i=0; i<sceneSubjects.length; i++)
-        	sceneSubjects[i].update(elapsedTime);
+        for(let i=0; i<sceneSubjects.length; i++){
+          sceneSubjects[i].update(elapsedTime);
+        }
+
 
         renderer.render(scene, camera);
-
         gameController.startGame();
     }
 

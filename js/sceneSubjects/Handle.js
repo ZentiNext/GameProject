@@ -34,4 +34,11 @@ function Handle(scene,eventBus,player) {
 		eventBus.post("isBallLost",y);
 	}
 
+	eventBus.subscribe("removeHandle",function(playerHandle){
+		console.log("remove Handle ");
+		if(player==playerHandle){
+			scene.remove(mesh);
+		}
+	});
+
 }

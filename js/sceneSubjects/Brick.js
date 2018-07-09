@@ -2,7 +2,7 @@ function Brick(scene,eventBus,brick) {
 	const width = 2;
 	const height = 0.4;
 	const depth = 0.1;
-
+console.log(brick);
 	var texture = new THREE.TextureLoader().load( './images/cactusSlab.png');
 	var material = new THREE.MeshBasicMaterial( { map: texture } );
 	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ),material);
@@ -15,21 +15,17 @@ function Brick(scene,eventBus,brick) {
 	}
 
 	/* Event Bus - Start */
-	eventBus.subscribe("damaged",function(args){
 
-		var owner=args[0];
-		var damagedBrick=args[1];
-		var bounces=args[2];
 
-		if(brick==damagedBrick){
-			scene.remove(mesh);
-			eventBus.post("removeBrick",brick);
-			eventBus.post("brickDamaged",[owner,bounces]);
-		}
+	eventBus.subscribe("removeAllBricks",function(){
+		console.log("remove bricks ");
+		scene.remove(mesh);
 	});
 
-	eventBus.subscribe("removeAllBricks",function(brick){
-		scene.remove(mesh);
+	eventBus.subscribe("removeBrick",function(brickNumber){
+		if (brickNumber==brick) {
+			scene.remove(mesh);
+		}
 	});
 	/* Event Bus - End */
 }
@@ -42,25 +38,39 @@ function Bricks(scene,eventBus) {
 
 	scene.add(mesh);
 
-	var bricks=[];
+	var bricksSubjects=[];
 
 	this.update = function(time) {
-		for(let i=0; i<bricks.length; i++){
-			if(bricks[i]){
-				bricks[i].update(time);
+		for(let i=0; i<bricksSubjects.length; i++){
+			if(bricksSubjects[i]){
+				bricksSubjects[i].update(time);
 			}
 		}
 	}
 
 	/* Event Bus - Start */
-	eventBus.subscribe("bricks",function(lives){
-		for (var i = 0; i < lives; i++) {
-			bricks[i]=new Brick(mesh,eventBus,i);
+	eventBus.subscribe("bricks",function(bricks){
+		console.log("Brick bricks i "+bricks);
+		for (var i = 0; i < bricks; i++) {
+			bricksSubjects[i]=new Brick(mesh,eventBus,i);
 		}
 	});
 
 	eventBus.subscribe("removeBrick",function(brick){
-		delete bricks[brick];
+		delete bricksSubjects[brick];
+	});
+
+	eventBus.subscribe("damaged",function(args){
+		//console.log("damaged "+brick+" "+args);
+		var owner=args[0];
+		var brickNumber=args[1];
+		var bounces=args[2];
+
+			console.log("Brick brickNumber "+brickNumber);
+			eventBus.post("removeBrick",brickNumber);
+			delete bricksSubjects[brickNumber];
+			eventBus.post("brickDamaged",[owner,bounces]);
+
 	});
 	/* Event Bus - End */
 }

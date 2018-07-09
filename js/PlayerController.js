@@ -89,7 +89,7 @@ function PlayerController(eventBus,clock,player){
   eventBus.subscribe("playerReset",function(args){
     score=0;
     bricks=0;
-    lives=3;
+    lives=0;
   });
   	/* Event Bus - End */
 

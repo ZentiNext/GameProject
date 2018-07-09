@@ -1,6 +1,6 @@
 function EventBus() {
     const eventCallbacksPairs = [];
-    
+
     this.subscribe = function( eventType, callback ) {
         const eventCallbacksPair = findEventCallbacksPair(eventType);
 
@@ -12,7 +12,7 @@ function EventBus() {
 
     this.post = function( eventType, args ) {
         const eventCallbacksPair = findEventCallbacksPair(eventType);
-        
+
         if(!eventCallbacksPair) {
             console.error("no subscribers for event " +eventType);
             return;
@@ -29,4 +29,11 @@ function EventBus() {
         this.eventType = eventType;
         this.callbacks = [callback];
     }
+
+    this.clear = function(){
+      while (!eventCallbacksPair.empty){
+        eventCallbacksPair.pop();
+      }
+    }
+
 }
