@@ -52,6 +52,14 @@ function Life(scene,eventBus,life,player) {
 	eventBus.subscribe("removeAllLives",function(lives) {
       scene.remove(mesh);
   });
+
+	eventBus.subscribe("changeLifeColour",function(args) {
+		var owner=args[0];
+		var colour=new THREE.Color( args[1] );
+    if (owner==player) {
+      mesh.material.uniforms.color.value=colour;
+    }
+  });
 	/* Event Bus - End */
 }
 

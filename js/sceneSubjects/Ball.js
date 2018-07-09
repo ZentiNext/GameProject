@@ -158,5 +158,16 @@ function Ball(scene,eventBus) {
 		linearVelocity.y=0;
 		linearVelocity.x=0;
 	});
+
+	eventBus.subscribe("changeBallColour",function(args) {
+		var owner=args[0];
+		var colour=new THREE.Color( args[1] );
+    if (owner=="1") {
+      colour1=colour;
+    }else{
+			colour2=colour;
+		}
+		mesh.material.uniforms.color.value=colour1;
+  });
 	/* Event Bus - End */
 }

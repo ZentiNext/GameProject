@@ -10,6 +10,7 @@ function PlayerController(eventBus,clock,player){
 
   var score = 0;
 
+  var colour=0xff0000;
 
   var leftKey="left";
   var rightKey="right";
@@ -17,6 +18,7 @@ function PlayerController(eventBus,clock,player){
   if(player=="2"){
     leftKey="a";
     rightKey="d";
+    colour=0x0000ff;
   }
 
   var limit_Xmin=-10+1.1;
@@ -81,8 +83,16 @@ function PlayerController(eventBus,clock,player){
 
 	/* Event Bus - Start */
   eventBus.subscribe("keyboardControls",function(args){
-    leftKey=args[0];
-    rightKey=args[1];
+    playerKey=args[2];
+    colour=args[3];
+    if (playerKey==player) {
+      leftKey=args[0];
+      rightKey=args[1];
+      eventBus.post("changeBallColour",[player,colour]);
+      eventBus.post("changeHandleColour",[player,colour]);
+      eventBus.post("changeLifeColour",[player,colour]);
+    }
+
   });
 
 

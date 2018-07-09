@@ -45,14 +45,16 @@ $("#btnMode").click(function(){
 	}
 
 });
-$("#btnKeyboardControlsSubmit").click(function(){
+$("#btnKeyboardControls1Submit").click(function(){
+	var specialkeys=["left","right","up","down"];
 	$("#status1").removeClass("alert-danger");
 	$("#status1").removeClass("alert-success");
-	var left=document.getElementById('left').value;
-	var right=document.getElementById('right').value;
+	var left=document.getElementById('left1').value;
+	var right=document.getElementById('right1').value;
+	var colour=document.getElementById('colour1').value;
 	var validate=new RegExp('^[a-zA-Z0-9]$');
-	if(validate.test(left) && validate.test(right)){
-		eventBus.post("keyboardControls",[left,right]);
+	if((specialkeys.includes(left) || validate.test(left)) && (specialkeys.includes(right) || validate.test(right)) ){
+		eventBus.post("keyboardControls",[left,right,"1",colour]);
 		$("#status1").text("Successfully Changed");
 		$("#status1").addClass("alert-success");
 	}else{
@@ -60,11 +62,27 @@ $("#btnKeyboardControlsSubmit").click(function(){
 		$("#status1").addClass("alert-danger");
 	}
 });
-
+$("#btnKeyboardControls2Submit").click(function(){
+	var specialkeys=["left","right","up","down"];
+	$("#status1").removeClass("alert-danger");
+	$("#status1").removeClass("alert-success");
+	var left=document.getElementById('left2').value;
+	var right=document.getElementById('right2').value;
+	var colour=document.getElementById('colour2').value;
+	var validate=new RegExp('^[a-zA-Z0-9]$');
+	if((specialkeys.includes(left) || validate.test(left)) && (specialkeys.includes(right) || validate.test(right)) ){
+		eventBus.post("keyboardControls",[left,right,"2",colour]);
+		$("#status2").text("Successfully Changed");
+		$("#status2").addClass("alert-success");
+	}else{
+		$("#status2").text("Wrong input");
+		$("#status2").addClass("alert-danger");
+	}
+});
 
 $("#btnGamePropertiesSubmit").click(function(){
-	$("#status2").removeClass("alert-danger");
-	$("#status2").removeClass("alert-success");
+	$("#status3").removeClass("alert-danger");
+	$("#status3").removeClass("alert-success");
 	var lives=document.getElementById('lives').value;
 	var bricks=document.getElementById('bricks').value;
 	var speedHandle=document.getElementById('speedHandle').value;
@@ -73,11 +91,11 @@ $("#btnGamePropertiesSubmit").click(function(){
 
 	if(validate.test(lives) && lives<=10 && validate.test(bricks) && bricks<=10 && validateDecimal.test(speedHandle) && speedHandle<=2){
 		eventBus.post("gameControls",[lives,bricks,speedHandle]);
-		$("#status2").text("Successfully Changed");
-		$("#status2").addClass("alert-success");
+		$("#status3").text("Successfully Changed");
+		$("#status3").addClass("alert-success");
 	}else{
-		$("#status2").text("Wrong input");
-		$("#status2").addClass("alert-danger");
+		$("#status3").text("Wrong input");
+		$("#status3").addClass("alert-danger");
 	}
 });
 

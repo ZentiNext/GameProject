@@ -73,22 +73,47 @@
 
 							<!-- Tab content -->
 							<div id="KeyboardControls" class="tabcontent">
-								<h3>Keyboard Controllers</h3>
+								<h3>Keyboard Controllers - Player 1</h3>
 								<form >
 									<div class="form-group">
+									  <label for=""></label>
+									  <input type="color" value="#ff0000" id="colour1">
+									  <p class="help-block">Pick a colour for player display</p>
+									</div>
+									<div class="form-group">
 									  <label for="left">Left Key</label>
-									  <input type="text" class="form-control" placeholder="Type one character" id="left">
+									  <input type="text" class="form-control" value="left" id="left1">
 									  <p class="help-block">Default Value is "left arrow key". Please type only one character</p>
 									</div>
 									<div class="form-group">
 									  <label for="right">Right Key</label>
-									  <input type="text" class="form-control" id="right" placeholder="Type one character">
+									  <input type="text" class="form-control" id="right1" value="right">
 									  <p class="help-block">Default value is "right arrow key". Please type only one character</p>
 									</div>
-
-									<button type="button" id="btnKeyboardControlsSubmit">Submit</button>
+									<button type="button" id="btnKeyboardControls1Submit">Submit</button>
 								</form>
 								<div id="status1" class="alert">
+								</div>
+								<h3>Keyboard Controllers - Player 2</h3>
+								<form >
+									<div class="form-group">
+									  <label for=""></label>
+									  <input type="color" value="#0000ff" id="colour2">
+									  <p class="help-block">Pick a colour for player display</p>
+									</div>
+									<div class="form-group">
+									  <label for="left">Left Key</label>
+									  <input type="text" class="form-control" value="A" id="left2">
+									  <p class="help-block">Default Value is "left arrow key". Please type only one character</p>
+									</div>
+									<div class="form-group">
+									  <label for="right">Right Key</label>
+									  <input type="text" class="form-control" id="right2" value="D">
+									  <p class="help-block">Default value is "right arrow key". Please type only one character</p>
+									</div>
+									<button type="button" id="btnKeyboardControls2Submit">Submit</button>
+								</form>
+								<div id="status2" class="alert">
 								</div>
 							</div>
 
@@ -112,7 +137,7 @@
 									</div>
 								</form>
 								<button type="button" id="btnGamePropertiesSubmit">Submit</button>
-								<div id="status2" class="alert">
+								<div id="status3" class="alert">
 								</div>
 							</div>
 

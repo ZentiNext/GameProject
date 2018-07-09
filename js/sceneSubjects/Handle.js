@@ -41,4 +41,11 @@ function Handle(scene,eventBus,player) {
 		}
 	});
 
+	eventBus.subscribe("changeHandleColour",function(args) {
+		var owner=args[0];
+		var colour=new THREE.Color( args[1] );
+    if (owner==player) {
+      mesh.material.uniforms.color.value=colour;
+    }
+  });
 }
