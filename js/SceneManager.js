@@ -16,7 +16,7 @@ function SceneManager(canvas,eventBus) {
 
     function buildScene() {
         const scene = new THREE.Scene();
-        var texture = new THREE.TextureLoader().load( "./images/terrane.jpg" );
+        var texture = new THREE.TextureLoader().load( "./textures/terrane.jpg" );
         scene.background = texture;
 
         return scene;

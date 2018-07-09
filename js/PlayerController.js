@@ -100,6 +100,8 @@ function PlayerController(eventBus,clock,player){
     score=0;
     bricks=0;
     lives=0;
+
+    $("#score"+player).text("Score: 0");
   });
   	/* Event Bus - End */
 

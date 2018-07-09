@@ -5,7 +5,7 @@ function Handle(scene,eventBus,player) {
 	const depth = 0.1;
 	const y=-5;
 
-	var texture = new THREE.TextureLoader().load( './images/playerWedge.png');
+	var texture = new THREE.TextureLoader().load( './textures/playerWedge.png');
 	 // uniforms
 	 var uniforms = {
 			 color: { type: "c", value: new THREE.Color( 0xff0000 ) }, // material is "red"

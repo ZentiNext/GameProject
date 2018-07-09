@@ -7,6 +7,7 @@ const sceneManager = new SceneManager(canvas,eventBus);
 const audioController = new AudioController();
 
 var playerMode="1 Player";
+$("#score2").hide();
 
 bindEventListeners();
 render();
@@ -35,12 +36,12 @@ $("#btnMode").click(function(){
 	if (playerMode=="1 Player") {
 		playerMode="2 Player";
 		$("#btnMode").text("Two Player");
-		$("#score2").html("Score: 0");
+		$("#score2").show();
 		sceneManager.createTwoPlayerSceneSubjects();
 	} else {
 		playerMode="1 Player";
 		$("#btnMode").text("One Player");
-		$("#score2").html("");
+		$("#score2").hide();
 		sceneManager.removeTwoPlayerSceneSubjects();
 	}
 

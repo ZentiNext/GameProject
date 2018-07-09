@@ -9,19 +9,19 @@ function WallSide(scene,eventBus,side) {
     width = 2;
     height = 12.4;
     x+=-11.5;
-    texture = new THREE.TextureLoader().load( './images/rockSlabLeft.png');
+    texture = new THREE.TextureLoader().load( './textures/rockSlabLeft.png');
     material = new THREE.MeshBasicMaterial( { map: texture } );
   } else if (side=="right") {
     width = 2;
     height = 12.4;
     x+=11.5;
-    texture = new THREE.TextureLoader().load( './images/rockSlabRight.png');
+    texture = new THREE.TextureLoader().load( './textures/rockSlabRight.png');
     material = new THREE.MeshBasicMaterial( { map: texture } );
   } else if (side=="top") {
     width = 25;
     height = 2.4;
     y+=5;
-    texture = new THREE.TextureLoader().load( './images/rockSlabTop.png');
+    texture = new THREE.TextureLoader().load( './textures/rockSlabTop.png');
     material = new THREE.MeshBasicMaterial( { map: texture } );
   }
 

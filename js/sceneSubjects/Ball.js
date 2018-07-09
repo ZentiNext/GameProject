@@ -7,7 +7,7 @@ function Ball(scene,eventBus) {
 	var colour1=new THREE.Color( 0xff0000 );
 	var colour2=new THREE.Color( 0x0000ff );
 
-	var texture = new THREE.TextureLoader().load( './images/ball.png');
+	var texture = new THREE.TextureLoader().load( './textures/ball.png');
 
 
 	 // uniforms

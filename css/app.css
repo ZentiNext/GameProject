@@ -2,7 +2,7 @@ body,html{
   height: 1700px;
 }
 body{
-  background-image: url("../images/background.jpg");
+  background-image: url("../textures/background.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -12,10 +12,10 @@ body{
   color: #ffffff;
 }
 #game{
-  height: 565px !important;
-  width: 960px !important;
-  margin-left: 90px;
-  margin-top: 475px;
+  height: 570px !important;
+  width: 978px !important;
+  margin-left: 87px;
+  margin-top: 470px;
 }
 #score1{
   margin-top: -40px;

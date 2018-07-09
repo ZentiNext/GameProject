@@ -3,7 +3,7 @@ function Brick(scene,eventBus,brick) {
 	const height = 0.4;
 	const depth = 0.1;
 console.log(brick);
-	var texture = new THREE.TextureLoader().load( './images/cactusSlab.png');
+	var texture = new THREE.TextureLoader().load( './textures/cactusSlab.png');
 	var material = new THREE.MeshBasicMaterial( { map: texture } );
 	const mesh = new THREE.Mesh(new THREE.BoxGeometry( width, height, depth ),material);
 
