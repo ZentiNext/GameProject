@@ -1,8 +1,8 @@
 function Ball(scene,eventBus) {
-
 	const radius = .5;
-  const widthSegments = 20;
-  const heightSegments = 20;
+  	const widthSegments = 20;
+  	const heightSegments = 20;
+  	const acceleration = 0.01;
 
 	var colour1=new THREE.Color( 0xff0000 );
 	var colour2=new THREE.Color( 0x0000ff );
@@ -92,6 +92,9 @@ function Ball(scene,eventBus) {
 		linearVelocity.x=linearInitVelocity.x+linearAcceleration.x*(collideTime-initTime);
 		initTime=collideTime;
 
+      linearVelocity.y+=linearVelocity.y*acceleration;
+      linearVelocity.x+=linearVelocity.x*acceleration;
+
 		if (type=="wall left"||type=="wall right") {
 			linearVelocity.y*=1;
 			linearVelocity.x*=-1;
@@ -138,7 +141,7 @@ function Ball(scene,eventBus) {
 	eventBus.subscribe("startBall",function(object){
 		linearVelocity.y=force*THREE.Math.randInt(-1,1)*Math.sin(angle);
 		linearVelocity.x=force*THREE.Math.randInt(-1,1)*Math.cos(angle);
-		linearAcceleration = new THREE.Vector3(0.01,0.01,0);
+		linearAcceleration = new THREE.Vector3(0,0,0);
 	});
 
 	eventBus.subscribe("stopBall",function(object){
