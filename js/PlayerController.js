@@ -2,7 +2,7 @@ function PlayerController(eventBus,clock,player){
 
   const keyboard	= new THREEx.KeyboardState();
 
-  var moveSpeed = 0.1;
+  var moveSpeed = 0.4;
 
   var livesLost = 0;
 

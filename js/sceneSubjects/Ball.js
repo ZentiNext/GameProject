@@ -139,8 +139,10 @@ function Ball(scene,eventBus) {
 	});
 
 	eventBus.subscribe("startBall",function(object){
-		linearVelocity.y=force*THREE.Math.randInt(-1,1)*Math.sin(angle);
-		linearVelocity.x=force*THREE.Math.randInt(-1,1)*Math.cos(angle);
+	    var startV = -0.01*THREE.Math.randInt(10,15);
+	    angle = THREE.Math.randInt(30,60);
+		linearVelocity.y=startV*Math.sin(angle);
+		linearVelocity.x=startV*Math.cos(angle);
 		linearAcceleration = new THREE.Vector3(0,0,0);
 	});
 
