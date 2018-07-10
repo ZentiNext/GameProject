@@ -86,7 +86,7 @@ function Ball(scene,eventBus) {
     return false;
   }
 
-  function collide(type,brickNumber) {
+  function collide(type,brickNumber, object) {
 		audioController.playBounceAudio();
 		linearVelocity.y=linearInitVelocity.y+linearAcceleration.y*(collideTime-initTime);
 		linearVelocity.x=linearInitVelocity.x+linearAcceleration.x*(collideTime-initTime);
@@ -134,7 +134,7 @@ function Ball(scene,eventBus) {
 		var brickNumber=args[3];
 		if ( isBallIntersectingObject(object) ){
 			collideTime=args[2];
-			collide(type,brickNumber);
+			collide(type,brickNumber,object);
 		}
 	});
 
